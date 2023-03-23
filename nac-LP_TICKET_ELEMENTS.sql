@@ -44,14 +44,18 @@ Modified RWC 12/11/2017 #9869.  Removed obsolete samples, using standard ticket 
 
 
 
--- set up some variables
 
--- TrueType fonts must be added to the printer using Boca's configuration software (https://tls-bocasystems.com/en/53/test-program-firmware/)
--- the number in TTF# below must match the ID provided (or generated) when the .ttf file is added via Boca's app
+-- horizontal elements in Tessitura's exported FGL are prepended with the following, for e.g.: <NR><RC121,36><F13><HW1,1>
+-- we follow that up with @font#, which prepends the TrueType font command before the value
 
--- horizontal elements are prepended with the following, for e.g.: <NR><RC121,36><F13><HW1,1>
--- @font# prepends the TrueType font command before the value
+/* Caveats
+	- TrueType fonts must be added to the printer using Boca's configuration software (https://tls-bocasystems.com/en/53/test-program-firmware/)
+	- the number in TTF# below must match the ID provided (or generated) when the .ttf file is added via Boca's app
+	- for plain text elements in your ticket design, simply prepend the text with <TTF#,#> to achieve the same font override e.g. "<TTF17,12>Section"
+	- UD elements have a hard limit of 200 characters, so choose wisely: group equal-length fields to stay under-budget
+*/
 
+-- first we set up some variables
 DECLARE @font1 varchar(10) = '<TTF17,15>'; 							--  Source Sans regular, 15pt
 DECLARE @font2 varchar(10) = '<TTF17,18>'; 							--  Source Sans regular, 18pt
 DECLARE @font3 varchar(10) = '<TTF18,15>'; 							--  Source Sans bold, 15pt
@@ -59,6 +63,7 @@ DECLARE @font4 varchar(10) = '<TTF18,18>'; 							--  Source Sans bold, 18pt
 DECLARE @element_reset varchar(10) = '<F3><t>'; 					--  reset font and start over
 DECLARE @line_break varchar(16) = CHAR(13) + CHAR(10) + '<n>'; 		-- add a line-break to the output
 
+-- then route to different queries for each User-defined element
 If @ude_no = 1
 	GOTO Ude1 -- date/time - 2 fields
 If @ude_no = 2
@@ -76,7 +81,6 @@ If @ude_no = 6
 Ude1:
 If @ude_no = 1 and @customer_no > 0
 	BEGIN
-		-- prepend the TrueType font command before the value to be output
 		-- example: "Mon lundi April 3 avril 2023 20:00"
 
 		SELECT @ude_value = 
