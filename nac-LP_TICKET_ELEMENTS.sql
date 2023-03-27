@@ -65,17 +65,29 @@ DECLARE @line_break varchar(16) = CHAR(13) + CHAR(10) + '<n>'; 		-- add a line-b
 
 -- then route to different queries for each User-defined element
 If @ude_no = 1
-	GOTO Ude1 -- date/time - 2 fields
+	GOTO Ude1
+	-- date/time - 2 fields
+	-- Ticket design fields: Performance.Perf.Info-1_1, Performance.Perf.Begin Time
 If @ude_no = 2
-	GOTO Ude2 -- artistic discipline
+	GOTO Ude2
+	-- artistic discipline
+	-- Ticket design fields: Performance.Prod.Season.Info-1_2
 If @ude_no = 3
-	GOTO Ude3 -- performance title - 3 fields
+	GOTO Ude3
+	-- performance title - 3 fields
+	-- Ticket design fields: Performance.Prod.Season.Info-1_2, Performance.Prod.Season.Info-1_3, Performance.Prod.Season.Info-1_4
 If @ude_no = 4
-	GOTO Ude4 -- performance-specific extra text (e.g. Student matinee) - 1 field
+	GOTO Ude4
+	-- performance-specific extra text
+	-- Ticket design fields: e.g. Student matinee) - 1 field (Performance.Perf.Info-2_1
 If @ude_no = 5
-	GOTO Ude5 -- venue - 1 field
+	GOTO Ude5
+	-- venue - 1 field
+	-- Ticket design fields: Seat.Theatre_1
 If @ude_no = 6
-	GOTO Ude6 -- section, row & seat -  you guessed it, 3 fields
+	GOTO Ude6
+	-- section, row & seat -  you guessed it, 3 fields
+	-- Ticket design fields: Seat.Section Short_Desc_1, Seat.Seat Row_1, Seat.Seat Number_1
 
 /**************************************************************************************/
 Ude1:
