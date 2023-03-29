@@ -1,0 +1,142 @@
+
+
+###########
+
+NAC PAH TICKET ID = 2079 (PRODUCTION)
+
+
+MAIN
+---------
+ID 5333 = DATE : UDE_6
+ID 5334 = TIME : Perf.Begin Time_1
+
+ID 5335 = DISCIPLINE : Prod.Season.Info-1_1
+ID 5336 = SHOW LINE1 : Prod.Season.Info-2_1
+ID 5337 = SHOW LINE2 : Prod.Season.Info-3_1
+ID 5338 = SHOW LINE3 : Prod.Season.Info-4_1
+ID 5339 = EXTRA : Perf.Info-2_1
+
+ID 5340 = VENUE : Theatre_1
+
+ID 5345 = SECTION : Section Short_Desc_1
+ID 5346 = ROW : Seat Row_1
+ID 5347 = SEAT : Seat Number_1
+
+ID 5348 = PRICE : Total Ticket Price_1
+ID 5349 = CLIENT NB : Constituent_Id
+ID 5350 = HST TVA : Title.Info-1_1
+
+(order NB missing?) or is that at the end of the barcode #
+
+
+STUB
+---------
+ID 5351 = SECTION : Section Short_Desc_1
+ID 5352 = ROW : Seat Row_1
+ID 5353 = SEAT : Seat Number_1
+
+ID 5354 = PERFORMANCE ID : Perf.code_1
+ID 5355 = CLIENT NB : Constituent_Id
+
+ID 5356 = PRICE : Total Ticket Price_1
+
+ID 5357 = BARCODE : Access Control Barcode_1
+ID 5363 = BARCODE NB : Access Control Barcode_1
+
+###########
+
+###########
+
+NAC PAH TICKET ID = 2079 (TEST)
+
+MAIN
+---------
+ID 5374 = DATE : UDE_6
+ID 5375 = TIME : Perf.Begin Time_1
+
+ID 5376 = DISCIPLINE : Prod.Season.Info-1_1
+ID 5377 = SHOW LINE1 : Prod.Season.Info-2_1
+ID 5378 = SHOW LINE2 : Prod.Season.Info-3_1
+ID 5379 = SHOW LINE3 : Prod.Season.Info-4_1
+ID 5380 = EXTRA : Perf.Info-2_1
+
+ID 5381 = VENUE : Theatre_1
+
+ID 5386 = SECTION : Section Short_Desc_1
+ID 5387 = ROW : Seat Row_1
+ID 5388 = SEAT : Seat Number_1
+
+ID 5389 = PRICE : Total Ticket Price_1
+ID 5390 = CLIENT NB : Constituent_Id
+ID 5391 = HST TVA : Title.Info-1_1
+
+(order NB missing?) or is that at the end of the barcode #
+
+
+STUB
+---------
+ID 5392 = SECTION : Section Short_Desc_1
+ID 5393 = ROW : Seat Row_1
+ID 5394 = SEAT : Seat Number_1
+
+ID 5395 = PERFORMANCE ID : Perf.code_1
+ID 5396 = CLIENT NB : Constituent_Id
+
+ID 5397 = PRICE : Total Ticket Price_1
+
+ID 5398 = BARCODE : Access Control Barcode_1
+ID 5404 = BARCODE NB : Access Control Barcode_1
+
+###########
+
+
+
+
+
+
+
+###########
+
+1st draft below:
+
+###########
+
+
+STANDARD NAC TICKET ID = 2066 (PRODUCTION)
+
+
+MAIN
+---------
+ID 5265 = DATE : Perf.Info-1_1
+ID 5267 = TIME : Perf.Begin Time_1
+
+ID 5268 = DISCIPLINE : Prod.Season.Info-1_1
+ID 5269 = SHOW LINE1 : Prod.Season.Info-2_1
+ID 5270 = SHOW LINE2 : Prod.Season.Info-3_1
+ID 5271 = SHOW LINE3 : Prod.Season.Info-4_1
+ID 5272 = EXTRA : Perf.Info-2_1
+
+ID 5273 = VENUE : Theatre_1
+
+ID 5278 = SECTION : Section Short_Desc_1
+ID 5279 = ROW : Seat Row_1
+ID 5280 = SEAT : Seat Number_1
+
+ID 5281 = PRICE : Total Ticket Price_1
+ID 5282 = CLIENT NB : Constituent_Id
+ID 5283 = HST TVA : Title.Info-1_1
+
+
+STUB
+---------
+ID 5284 = SECTION : Section Short_Desc_1
+ID 5285 = ROW : Seat Row_1
+ID 5286 = SEAT : Seat Number_1
+
+ID 5287 = PERFORMANCE ID : Perf.code_1
+ID 5288 = CLIENT NB : Constituent_Id
+
+ID 5289 = PRICE : Total Ticket Price_1
+
+ID 5290 = BARCODE : Access Control Barcode_1
+ID 5298 = BARCODE NB : Access Control Barcode_1

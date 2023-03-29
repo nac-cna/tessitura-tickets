@@ -66,28 +66,28 @@ DECLARE @line_break varchar(16) = CHAR(13) + CHAR(10) + '<n>'; 		-- add a line-b
 -- then route to different queries for each User-defined element
 If @ude_no = 1
 	GOTO Ude1
-	-- date/time - 2 fields
+	-- date/time - 2 fields (used for thermal printed ticket only)
 	-- Ticket design fields: Performance.Perf.Info-1_1, Performance.Perf.Begin Time
 If @ude_no = 2
 	GOTO Ude2
 	-- artistic discipline
-	-- Ticket design fields: Performance.Prod.Season.Info-1_2
+	-- Ticket design fields: Performance.Prod.Season.Info-1_1
 If @ude_no = 3
 	GOTO Ude3
 	-- performance title - 3 fields
 	-- Ticket design fields: Performance.Prod.Season.Info-1_2, Performance.Prod.Season.Info-1_3, Performance.Prod.Season.Info-1_4
 If @ude_no = 4
 	GOTO Ude4
-	-- performance-specific extra text
-	-- Ticket design fields: e.g. Student matinee) - 1 field (Performance.Perf.Info-2_1
+	-- performance-specific extra text and venue
+	-- Ticket design fields: (e.g. Student matinee) - 2 field (Performance.Perf.Info-2_1, Seat.Theatre_1
 If @ude_no = 5
 	GOTO Ude5
-	-- venue - 1 field
-	-- Ticket design fields: Seat.Theatre_1
-If @ude_no = 6
-	GOTO Ude6
 	-- section, row & seat -  you guessed it, 3 fields
 	-- Ticket design fields: Seat.Section Short_Desc_1, Seat.Seat Row_1, Seat.Seat Number_1
+If @ude_no = 6
+	GOTO Ude6
+	-- date 1 field (used for PAH ticket only)
+	-- Ticket design fields: Performance.Perf.Info-1_1
 
 /**************************************************************************************/
 Ude1:
@@ -169,11 +169,13 @@ If @ude_no = 3 and @customer_no > 0
 Ude4:
 If @ude_no = 4 and @customer_no > 0
 	BEGIN
-		-- e.g value: "Student Matinee" - nb this is pulled from the perf, NOT the prod
-		SELECT @ude_value = @font3 + ti.text2
+		-- e.g value: "Student Matinee, Salle Southam Hall" - nb this is pulled from the perf, NOT the prod
+		SELECT @ude_value = @font1 + ti.text2 + @element_reset + @line_break +
+			'<NR><RC455,38>' + @font3 + f.description
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_inventory as ti ON ti.inv_no = tp.perf_no
+			LEFT OUTER JOIN t_facility as f ON f.facil_no = tp.facility_no
 		WHERE t_sub_lineitem.order_no = @order_no;
 		
 		Return
@@ -182,19 +184,6 @@ If @ude_no = 4 and @customer_no > 0
 /**************************************************************************************/
 Ude5:
 If @ude_no = 5 and @customer_no > 0
-	BEGIN
-		-- e.g value: "Salle Southam Hall"
-		SELECT @ude_value = @font3 + f.description
-		FROM t_sub_lineitem
-			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-			LEFT OUTER JOIN t_facility as f ON f.facil_no = tp.facility_no
-		WHERE t_sub_lineitem.order_no = @order_no;
-
-		Return
-	END
-/**************************************************************************************/
-Ude6:
-If @ude_no = 6 and @customer_no > 0
 	BEGIN
 		-- e.g value: "LOGERD VV 13"
 		SELECT @ude_value = 
@@ -205,6 +194,42 @@ If @ude_no = 6 and @customer_no > 0
 			LEFT OUTER JOIN t_sub_lineitem as ts ON t_seat.seat_no = ts.seat_no
 			LEFT OUTER JOIN tr_section as s ON t_seat.section = s.id
 		WHERE ts.order_no = @order_no;
+	
+		Return
+	END
+/**************************************************************************************/
+Ude6:
+If @ude_no = 6 and @customer_no > 0
+	BEGIN
+		-- e.g value: "Mon lundi April 3 avril 2023"
+
+		SELECT @ude_value = FORMAT(tp.perf_dt, 'ddd ')
+		FROM t_sub_lineitem
+			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
+		WHERE t_sub_lineitem.order_no = @order_no;
+		
+		SET LANGUAGE French;
+		
+		SELECT @ude_value += FORMAT(tp.perf_dt, 'dddd ')
+		FROM t_sub_lineitem
+			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
+		WHERE t_sub_lineitem.order_no = @order_no;
+		
+		SET LANGUAGE us_english;
+		
+		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM %d ')
+		FROM t_sub_lineitem
+			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
+		WHERE t_sub_lineitem.order_no = @order_no;
+		
+		SET LANGUAGE French;
+		
+		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM yyyy')
+		FROM t_sub_lineitem
+			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
+		WHERE t_sub_lineitem.order_no = @order_no;
+		
+		SET LANGUAGE us_english;
 
 		Return
 	END
