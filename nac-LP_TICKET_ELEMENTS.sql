@@ -99,35 +99,35 @@ If @ude_no = 1 and @customer_no > 0
 			@font3 + FORMAT(tp.perf_dt, 'ddd ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		SET LANGUAGE French;
 
 		SELECT @ude_value += FORMAT(tp.perf_dt, 'dddd ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		SET LANGUAGE us_english;
 
 		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM %d ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		SET LANGUAGE French;
 
 		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM yyyy')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE us_english;
 
 		SELECT @ude_value += @element_reset + @line_break + '<NR><RC37,658>' + @font3 + FORMAT(tp.perf_dt, '%H:mm')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		Return
 	END
@@ -143,7 +143,7 @@ If @ude_no = 2 and @customer_no > 0
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_prod_season as tps ON tps.prod_season_no = tp.prod_season_no
 			LEFT OUTER JOIN t_inventory as ti ON ti.inv_no = tp.prod_season_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		Return
 	END
@@ -160,7 +160,7 @@ If @ude_no = 3 and @customer_no > 0
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_prod_season as tps ON tps.prod_season_no = tp.prod_season_no
 			LEFT OUTER JOIN t_inventory as ti ON ti.inv_no = tp.prod_season_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		Return
 	END
@@ -176,7 +176,7 @@ If @ude_no = 4 and @customer_no > 0
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_inventory as ti ON ti.inv_no = tp.perf_no
 			LEFT OUTER JOIN t_facility as f ON f.facil_no = tp.facility_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		Return
 	END
@@ -191,9 +191,9 @@ If @ude_no = 5 and @customer_no > 0
 			'<NR><RC578,276>' + @font4 + t_seat.seat_row + @element_reset + @line_break +
 			'<NR><RC578,418>' + @font4 + t_seat.seat_num
 		FROM t_seat
-			LEFT OUTER JOIN t_sub_lineitem as ts ON t_seat.seat_no = ts.seat_no
+			LEFT OUTER JOIN t_sub_lineitem as sli ON t_seat.seat_no = sli.seat_no
 			LEFT OUTER JOIN tr_section as s ON t_seat.section = s.id
-		WHERE ts.order_no = @order_no;
+		WHERE sli.sli_no = @cur_sli_no;
 	
 		Return
 	END
@@ -206,28 +206,28 @@ If @ude_no = 6 and @customer_no > 0
 		SELECT @ude_value = FORMAT(tp.perf_dt, 'ddd ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE French;
 		
 		SELECT @ude_value += FORMAT(tp.perf_dt, 'dddd ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE us_english;
 		
 		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM %d ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE French;
 		
 		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM yyyy')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
-		WHERE t_sub_lineitem.order_no = @order_no;
+		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE us_english;
 
