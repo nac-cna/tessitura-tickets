@@ -41,7 +41,8 @@ ID 5355 = CLIENT NB : Constituent_Id
 ID 5356 = PRICE : Total Ticket Price_1
 
 ID 5357 = BARCODE : Access Control Barcode_1
-ID 5363 = BARCODE NB : Access Control Barcode_1
+
+ID 5364 = BARCODE (lower) : Access Control Barcode_1
 
 ###########
 
@@ -85,7 +86,8 @@ ID 5396 = CLIENT NB : Constituent_Id
 ID 5397 = PRICE : Total Ticket Price_1
 
 ID 5398 = BARCODE : Access Control Barcode_1
-ID 5404 = BARCODE NB : Access Control Barcode_1
+
+ID 5405 = BARCODE (lower) : Access Control Barcode_1
 
 ###########
 
