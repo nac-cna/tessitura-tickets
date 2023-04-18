@@ -56,10 +56,11 @@ Modified RWC 12/11/2017 #9869.  Removed obsolete samples, using standard ticket 
 */
 
 -- first we set up some variables
-DECLARE @font1 varchar(10) = '<TTF17,15>'; 							--  Source Sans regular, 15pt
-DECLARE @font2 varchar(10) = '<TTF17,18>'; 							--  Source Sans regular, 18pt
-DECLARE @font3 varchar(10) = '<TTF18,15>'; 							--  Source Sans bold, 15pt
-DECLARE @font4 varchar(10) = '<TTF18,18>'; 							--  Source Sans bold, 18pt
+DECLARE @font1 varchar(10) = '<TTF17,14>'; 							--  Source Sans regular, 14pt
+DECLARE @font2 varchar(10) = '<TTF17,17>'; 							--  Source Sans regular, 17pt
+DECLARE @font3 varchar(10) = '<TTF17,18>'; 							--  Source Sans regular, 18pt (unused)
+DECLARE @font4 varchar(10) = '<TTF18,15>'; 							--  Source Sans bold, 15pt
+DECLARE @font5 varchar(10) = '<TTF18,18>'; 							--  Source Sans bold, 18pt (unused)
 DECLARE @element_reset varchar(10) = '<F3><t>'; 					--  reset font and start over
 DECLARE @line_break varchar(16) = CHAR(13) + CHAR(10) + '<n>'; 		-- add a line-break to the output
 
@@ -96,7 +97,7 @@ If @ude_no = 1 and @customer_no > 0
 		-- example: "Mon lundi April 3 avril 2023 20:00"
 
 		SELECT @ude_value = 
-			@font3 + FORMAT(tp.perf_dt, 'ddd ')
+			@font4 + FORMAT(tp.perf_dt, 'ddd ')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
@@ -124,7 +125,7 @@ If @ude_no = 1 and @customer_no > 0
 		
 		SET LANGUAGE us_english;
 
-		SELECT @ude_value += @element_reset + @line_break + '<NR><RC37,658>' + @font3 + FORMAT(tp.perf_dt, '%H:mm')
+		SELECT @ude_value += @element_reset + @line_break + '<NR><RC20,678>' + @font4 + FORMAT(tp.perf_dt, '%H:mm')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
@@ -154,8 +155,8 @@ If @ude_no = 3 and @customer_no > 0
 	BEGIN
 		-- e.g value: "Schumann's concerto, title in french, 4th line title if necessary"
 		SELECT @ude_value = @font2 + ti.text2 + @element_reset + @line_break + 
-			'<NR><RC251,37>' + @font2 + ti.text3 + @element_reset + @line_break + 
-			'<NR><RC298,34>' + @font2 + ti.text4
+			'<NR><RC235,56>' + @font2 + ti.text3 + @element_reset + @line_break + 
+			'<NR><RC290,56>' + @font2 + ti.text4
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_prod_season as tps ON tps.prod_season_no = tp.prod_season_no
@@ -171,7 +172,7 @@ If @ude_no = 4 and @customer_no > 0
 	BEGIN
 		-- e.g value: "Student Matinee, Salle Southam Hall" - nb this is pulled from the perf, NOT the prod
 		SELECT @ude_value = @font1 + ti.text2 + @element_reset + @line_break +
-			'<NR><RC455,38>' + @font3 + f.description
+			'<NR><RC455,56>' + @font4 + f.description
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_inventory as ti ON ti.inv_no = tp.perf_no
@@ -188,8 +189,8 @@ If @ude_no = 5 and @customer_no > 0
 		-- e.g value: "LOGERD VV 13"
 		SELECT @ude_value = 
 			@font4 + s.short_desc + @element_reset + @line_break +
-			'<NR><RC578,276>' + @font4 + t_seat.seat_row + @element_reset + @line_break +
-			'<NR><RC578,418>' + @font4 + t_seat.seat_num
+			'<NR><RC573,288>' + @font4 + t_seat.seat_row + @element_reset + @line_break +
+			'<NR><RC573,438>' + @font4 + t_seat.seat_num
 		FROM t_seat
 			LEFT OUTER JOIN t_sub_lineitem as sli ON t_seat.seat_no = sli.seat_no
 			LEFT OUTER JOIN tr_section as s ON t_seat.section = s.id
