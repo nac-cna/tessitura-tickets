@@ -104,28 +104,28 @@ If @ude_no = 1 and @customer_no > 0
 
 		SET LANGUAGE French;
 
-		SELECT @ude_value += FORMAT(tp.perf_dt, 'dddd ')
+		SELECT @ude_value += REPLACE(FORMAT(tp.perf_dt, 'ddd '),'.','')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		SET LANGUAGE us_english;
 
-		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM %d ')
+		SELECT @ude_value += REPLACE(FORMAT(tp.perf_dt, 'MMM %d '),'.','')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 
 		SET LANGUAGE French;
 
-		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM yyyy')
+		SELECT @ude_value += REPLACE(FORMAT(tp.perf_dt, 'MMM yyyy'),'.','')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE us_english;
 
-		SELECT @ude_value += @element_reset + @line_break + '<NR><RC20,678>' + @font4 + FORMAT(tp.perf_dt, '%H:mm')
+		SELECT @ude_value += @element_reset + @line_break + '<NR><RC10,678>' + @font4 + FORMAT(tp.perf_dt, '%H:mm')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
@@ -211,21 +211,21 @@ If @ude_no = 6 and @customer_no > 0
 		
 		SET LANGUAGE French;
 		
-		SELECT @ude_value += FORMAT(tp.perf_dt, 'dddd ')
+		SELECT @ude_value += REPLACE(FORMAT(tp.perf_dt, 'ddd '),'.','')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE us_english;
 		
-		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM %d ')
+		SELECT @ude_value += REPLACE(FORMAT(tp.perf_dt, 'MMM %d '),'.','')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
 		
 		SET LANGUAGE French;
 		
-		SELECT @ude_value += FORMAT(tp.perf_dt, 'MMMM yyyy')
+		SELECT @ude_value += REPLACE(FORMAT(tp.perf_dt, 'MMM yyyy'),'.','')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 		WHERE t_sub_lineitem.sli_no = @cur_sli_no;
@@ -234,3 +234,5 @@ If @ude_no = 6 and @customer_no > 0
 
 		Return
 	END
+
+
