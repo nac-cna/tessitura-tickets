@@ -45,6 +45,12 @@ Modified RWC 12/11/2017 #9869.  Removed obsolete samples, using standard ticket 
 
 
 
+/*
+	LP_TICKET_ELEMENTS for NAC-CNA printed and PAH tickets
+	Author: Dan Copeland <dan.copeland@nac-cna.ca>
+	Repo: https://github.com/nac-cna/tessitura-tickets
+*/
+
 -- horizontal elements in Tessitura's exported FGL are prepended with the following, for e.g.: <NR><RC121,36><F13><HW1,1>
 -- we follow that up with @font#, which prepends the TrueType font command before the value
 
@@ -139,7 +145,7 @@ If @ude_no = 2 and @customer_no > 0
 	BEGIN
 		-- e.g value: "NAC Orchestra"
 		SELECT @ude_value = 
-			@font1 + ti.text1
+			@font1 + ISNULL(ti.text1,'')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_prod_season as tps ON tps.prod_season_no = tp.prod_season_no
@@ -154,9 +160,9 @@ Ude3:
 If @ude_no = 3 and @customer_no > 0
 	BEGIN
 		-- e.g value: "Schumann's concerto, title in french, 4th line title if necessary"
-		SELECT @ude_value = @font2 + ti.text2 + @element_reset + @line_break + 
-			'<NR><RC235,56>' + @font2 + ti.text3 + @element_reset + @line_break + 
-			'<NR><RC290,56>' + @font2 + ti.text4
+		SELECT @ude_value = @font2 + ISNULL(ti.text2,'') + @element_reset + @line_break + 
+			'<NR><RC235,56>' + @font2 + ISNULL(ti.text3,'') + @element_reset + @line_break + 
+			'<NR><RC290,56>' + @font2 + ISNULL(ti.text4,'')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_prod_season as tps ON tps.prod_season_no = tp.prod_season_no
@@ -171,8 +177,8 @@ Ude4:
 If @ude_no = 4 and @customer_no > 0
 	BEGIN
 		-- e.g value: "Student Matinee, Salle Southam Hall" - nb this is pulled from the perf, NOT the prod
-		SELECT @ude_value = @font1 + ti.text2 + @element_reset + @line_break +
-			'<NR><RC455,56>' + @font4 + f.description
+		SELECT @ude_value = @font1 + ISNULL(ti.text2,'') + @element_reset + @line_break +
+			'<NR><RC455,56>' + @font4 + ISNULL(f.description,'')
 		FROM t_sub_lineitem
 			LEFT OUTER JOIN t_perf as tp ON tp.perf_no = t_sub_lineitem.perf_no
 			LEFT OUTER JOIN t_inventory as ti ON ti.inv_no = tp.perf_no
@@ -188,9 +194,9 @@ If @ude_no = 5 and @customer_no > 0
 	BEGIN
 		-- e.g value: "LOGERD VV 13"
 		SELECT @ude_value = 
-			@font4 + s.short_desc + @element_reset + @line_break +
-			'<NR><RC573,288>' + @font4 + t_seat.seat_row + @element_reset + @line_break +
-			'<NR><RC573,438>' + @font4 + t_seat.seat_num
+			@font4 + ISNULL(s.short_desc,'') + @element_reset + @line_break +
+			'<NR><RC573,288>' + @font4 + ISNULL(t_seat.seat_row,'') + @element_reset + @line_break +
+			'<NR><RC573,438>' + @font4 + ISNULL(t_seat.seat_num,'')
 		FROM t_seat
 			LEFT OUTER JOIN t_sub_lineitem as sli ON t_seat.seat_no = sli.seat_no
 			LEFT OUTER JOIN tr_section as s ON t_seat.section = s.id
