@@ -142,3 +142,12 @@ ID 5289 = PRICE : Total Ticket Price_1
 
 ID 5290 = BARCODE : Access Control Barcode_1
 ID 5298 = BARCODE NB : Access Control Barcode_1
+
+
+date:
+
+dd/mm/yyyy
+$##0,000.00
+
+TIME
+194/280
