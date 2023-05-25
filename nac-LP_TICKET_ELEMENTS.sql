@@ -86,7 +86,7 @@ If @ude_no = 3
 If @ude_no = 4
 	GOTO Ude4
 	-- performance-specific extra text and venue
-	-- Ticket design fields: (e.g. Student matinee) - 2 field (Performance.Perf.Info-2_1, Seat.Theatre_1
+	-- Ticket design fields: (e.g. Student matinee, Salle Southam Hall) - 2 field (Performance.Perf.Info-2_1, Seat.Theatre_1
 If @ude_no = 5
 	GOTO Ude5
 	-- section, row & seat -  you guessed it, 3 fields
